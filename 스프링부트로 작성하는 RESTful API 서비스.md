@@ -31,29 +31,28 @@ https://github.com/soongon/restapp/tree/master/src/main/java/com/acompany/restap
   1. 컨테이너 역할 (IOC)  
       - Spring컨테이너는 Java 객체의 Life Cycle을 관리하며,   
         Spring컨테이너로 부터 필요한 객체를 가져와 사용할 수 있음.       
-
   2. DI(Dependency Injection) 지원  
       - Spring은 설정 파일이나 어노테이션을 통해서 객체 간의 의존관계를      
         설정할 수 있도록 하고 있음       
-
   3. AOP(Aspect Oriented Programming) 지원  
       - Srping은 트랜잭션이나 로깅, 보안과 같이 공통적으로 필요로 하는       
         모듈들을 실제 핵심 모듈에서 분리해서 적용할 수 있음.
-
   4. POJO(Plain Old Java Object) 지원    
       - Spring컨테이너에 저장되는 Java객체는 특정한 인터페이스를         
         구현하거나, 특정 클래스를 상속받지 않아도 됨     
-
   5. 트랜잭션 처리를 위한 일관된 방법을 지원  
       - JDBC, JTA 등 어떤 트랜잭션을 사용하던 설정을 통해 정보를 관리하므로      
       트랜잭션 구현에 상관없이 동일한 코드 사용 가능       
-
   6. 영속성(Persistence)과 관련된 다양한 API지원  
       - Spring은 MyBatis, Hibernate 등 데이터베이스 처리를 위한   
-      ORM(Object Relational Mapping) 프레임워크들과의 연동 지원   
+        ORM(Object Relational Mapping) 프레임워크들과의 연동 지원   
+
 
 
 # 2차 Spring 개발 환경 설정
+
+## summary
+
 리액티브 리액터   
 2014 jdk 1.8 많이 바뀌고 람다 도입 모던 랭귀지로 거듭 났다    
 1.9 부터는 jdk 9(나인) 이라 부르고  jdk 9(나인)  이전과 이후로 나뉨 모듈이란 개념이 등장    
@@ -70,11 +69,12 @@ Best Practice 모범경영
   - 설정을 최대한 줄이고 XML 설정파일 필요 없음
 
 
-## 스프링부트 프로젝트 생성
+## 2-1.스프링부트 프로젝트 생성
   1. start.spring.io 접속    
   2. Maven, Gradle 프로젝트 및 언어 선택   
   3. 스프링부트 버전 선택    
   4. 프로젝트 메타정보      
+
     - Group    : 도메인에 역순으로 지어서 쓴다  
     - Artifact : 프로젝트명  
     - java 버전   
@@ -82,15 +82,17 @@ Best Practice 모범경영
     - Dependencies (Web, Spring Web 선택(Spring MVC.))
   5. generate 하면 zip 파일로 다운로드됨
   6. zip 파일을 인텔리제이(IDE툴) 에서 import 한다.   
+
     - (new -> project -> empty project -> 경로지정 -> 열리고 팝업에서 메이븐 지정)
 
 ※ - 스프링5와 스프링 부트는 자바8 이상의 설치가 필요하다    
    - 스프링부트는 베스트 프랙티스에 따라 자동으로 설정을 수행해준다.  
    - tomcat Port 는 /src/main/resources/application.properties 파일에다 server.port = 8085 설정     
      application.properties 파일 설정을 더 알고 싶다면.     
+
     https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
 
-## 스프링부트_프로젝트_기본구조
+## 2-2.스프링부트_프로젝트_기본구조
 ![스프링부트_프로젝트_기본구조.PNG](./img/springboot_base_structure.PNG)     
   - XXXApplication.java (자동 생성)
     ```java
@@ -101,11 +103,12 @@ Best Practice 모범경영
         }
       }
     ````
-  - @SpringBootApplication
-    - @Configuartion
-    - @ComponentScan
-    - @EnableAutoConfiguration
-
+    
+    - @SpringBootApplication
+      - @Configuartion
+      - @ComponentScan
+      - @EnableAutoConfiguration
+    
   - 스프링 부트 설정 파일
     - application.properties
       - 선택적인 파일(사용하지 않아아도 됨)
@@ -114,7 +117,7 @@ Best Practice 모범경영
     - 기존의 XML 설정파일도 가져올 수 있음
       - Application.java 파일에 아래 어노테이션 추가
       - @ImportResource("classpath:spring/root-context.xml")
-  
+
   - 스프링 부트 개발자 툴
     - 스프링 부트 개발모드 지원
       - thymeleaf 등 템플릿에 대한 개발 캐싱을 비활성화 처리  
@@ -142,10 +145,10 @@ Best Practice 모범경영
         @RunWith(SpringRunner.class)
         @SpringBootTest
         public class HelloBootApplicationTests{
-
+      
           @Test
           public void contextLoads(){
-
+      
           }
         }
       ```
@@ -153,7 +156,11 @@ Best Practice 모범경영
 
 
 
+
 # 3차 REST 아키텍처 소개(1)
+
+## summary
+
 HTTP 웹 서비스 개요와 RESTful 웹서비스란 무엇인지 알아봅니다.   
 Roy Fielding 박사학위 논문에서 제안 되었으며 REST 는 아키텍처 라기 보다는 하나의 규약이다     
 
@@ -162,8 +169,10 @@ Roy Fielding 박사학위 논문에서 제안 되었으며 REST 는 아키텍처
   - 인터넷 상에서 데이터를 주고 받기 위한 서버/클라이언트 구조의 프로토콜    
   - 대부분 HTTP 프로토콜을 사용하고 노드들끼리 안쓰는 구간은 
   - 애플리케이션과 데이터베이스 구간 전용프로토콜 드라이버 형태로 전용프로토콜을 사용중이다.
+  
 - HTTP 메시지
   - 헤더와 바디로 구성
+  
 - HTTP Methods
   - 클라이언트 요청의 종류 
   - 서버는 이 정보를 통해 적당한 응답을 제공
@@ -197,6 +206,8 @@ Roy Fielding 박사학위 논문에서 제안 되었으며 REST 는 아키텍처
   - RESTful 하다 - REST API를 제공하는 웹 서비스
 
 - 테스트 호출 URL https://api.github.com/users/realllbro
+
+
 
 
 # 4차 REST 아키텍처 소개(2)
@@ -292,7 +303,10 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
 3. 요청과 응답에 대한 메타데이터는 HTTP 프로토콜 방식을 사용한다.    
 4. URL에 동사(verb)를 포함하지 않는다.   
 
+
+
 # 5차 Spring MVC로 RESTful API 서비스 구현
+
 1. Spring MVC에서 RESTful 지원
   - 스프링 MVC에서 RESTful을 지원하는 방법을 알아봅니다.  
   - Spring-Web MVC에서의 RESTful 지원
@@ -319,22 +333,27 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
     ```java
       @RestController
       public class IndexController{
-
+    
         @GetMapping("/")
         public String index(){
           return "Hello, Boot";
         }
-
+    
       }
     ```
 
 2. Layered Architecture
   - 계층화 아키텍처를 의미하는 Layered Architecture를 스프링에서 어떻게 구현하는지 확인합니다.
+
   - Layered Architecture는 인접한 레이어 간의 통신만 허용하고 반드시 레이어를 거쳐서 통신하는     
     구조를 가진다. 대표적 사례로 OSI7 레이어가 있다.    
+    
   - 효율적인 개발과 유지보수를 위해 계층화하여 개발 
+
   - 대부분의 중/대규모 어플리케이션에서 적용  
+
   - 각 레이어는 독립된 R&R을 가짐   
+
   - Layered Architecture 특징 (Presentation Layer -> Business Logic Layer -> Data Access Layer)   
     - 프레젠테이션 영역 (Presentation Layer) @Controller 영역   
       - 사용자와 상호작용을 담당  
@@ -345,22 +364,29 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
     - 데이터 영역 (Data Access Layer) DAO 영역  
       - 데이터의 저장과 조회를 담당 
       - 주로 데이터베이스와 연동하여 작업 
+    
   - Layered Architecture 전자정부프레임워크 사례
     - Controller, Service, DAO 영역을 레이어링 시켜 놨으며 각각의 레이어들 끼리는 ValueObject(VO)를 통해 데이터를 주고 받는다.    
-  ![레이어아키텍처_전자정부프레임워크](./img/layered_architecture.PNG)
+    ![레이어아키텍처_전자정부프레임워크](./img/layered_architecture.PNG)
 
   - 컴포넌트 자동등록
     - 컴포넌트는 스프링 컨테이너 위에 로딩되는 객체이며 사용자가 라이프 사이클을 직접 관리 할 수 없고 
       스프링 컨테이너가 객체 생성, 사용을 관리한다.   
+      
     - 어노테이션(Annotation) 사용
       - @Component 와 하위 어노테이션 사용  
         ![컴포넌트_어노테이션](.\img\component_annotation.PNG)              
+        
       - @Autowired
         - Component 간의 의존관계는 Autowired라는 Annotation으로 적용
         - @Autowired 어노테이션은 DI 기능으로 자동으로 의존관계를 맺어준다.
-
+      
         
+
+
+
 # 6차 REST 에서 CRUD 구현 1
+
 1. RESTful API 서비스에서의 HTTP 메서드 사용    
 
   - HTTP 메소드  
@@ -426,7 +452,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
         "nextPage":"http://localhost:8080/users?page=2",
         "total":13
       }
-      ```      
+      ```
     - 에러 메시지   
       ```javascript
       {
@@ -437,7 +463,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
           "description": "Email address is invalid"
         }
       }
-      ```    
+      ```
 2. JSON Data Format, REST(HTTP) 클라이언트
   - REST 클라이언트
     - Postman : REST API 테스트하는 Chrome 확장 프로그램 설치
@@ -460,10 +486,10 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
           @RestController
           @RequestMapping("/users")
           public class UserController{
-
+        
             @AutoWired
             private UserService userService;
-
+        
             @GetMapping("/{userid}")
             public User getUser(@PathVariable("userid") String userid){
               return userService.getUser(userid);
@@ -615,8 +641,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
     - JWT 토큰 만들기 동영상 부터 다시....
 
 
-  
-  # 
+
   - Summary Note
     * 로깅 시스템은 여러가지로 사용 가능하지만 SLF4J를 로깅 인터페이스로 해서 Logback을 스프링5(스프링부트2)의 구현체로 많이 사용한다.      
     * 스프링에서의 예외처리는 주로 컨트롤러 단에서 처리되며, @ControllerAdvice에서 글로벌 하게 처리될 수 있다.    
@@ -629,7 +654,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
       ```
         # spring framework logging    
         logging.level.org.springframework = ERROR   
-
+      
         # local application logging    
         logging.level.com.acomp.hello = INFO           
       ```
@@ -639,12 +664,12 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
         import org.slf4j.Logger;
         import org.slf4j.LoggerFactory;
         // other imports
-
+      
         @RestController
         public class HomeController{
             private static final Logger logger = 
                       LoggerFactory.getLogger(HomeController.class);
-
+      
           @GetMapping("/")                      
           public Map<String, Object> test(){
               Map<String, Object> map = new HashMap<>();
@@ -677,7 +702,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
               public String handleBaseException(BaseException e){
                   return e.getMessage();
               }
-
+        
               @ExceptionHandler(value = Exception.class)
               public String handleBaseException(Exception e){
                   return e.getMessage();
@@ -697,7 +722,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
                   res.put("status", "error");
                   return res;
               }
-
+        
               @ExceptionHandler(value = Exception.class)
               public Map<String, String> handleException(Exception e){
                   Map<String, String> res = new HashMap<>();
@@ -714,28 +739,27 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
         public String nfeHandler(NumberFormatException e){
             return e.getMessage();
         }         
-      ```        
+      ```
   - 비지니스 예외 예제
     * 명시적 예외처리가 필요 없는 RuntimeException 타입으로 작성
     ```java
       public class ClientException extends RuntimeException{
           private final int errorCode;
           private final String errorDescription;
-
+    
           public ClientException(ApiError error){
               super(error.getErrorCode() + ": "+ error.getDescription());
               this.errorCode = error.getErrorCode();
               this.errorDescription = error.getDescription();
           }
-
+    
           public int getErrorCode(){
               return errorCode;
           }
-
+    
           public String getErrorDescription(){
               return errorDescription;
           }
       }
     ```
-
 
