@@ -1,3 +1,5 @@
+[toc]
+
 Application Context         
 ApplicationContext 생성하기         
 ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");          
@@ -229,6 +231,7 @@ REST란 무엇인가?
 
 REST 원리 및 원칙(제약조건)   
 확장성 있는 웹 서비스를 위한 소프트웨어 아키텍처 적인 접근    
+
 1. Client-Server
     - View와 Data를 분리
     - Portability(이동성)를 향상
@@ -316,6 +319,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
   - @Controller 와    
     @RequestMapping(value="url", method=POST/GET/DELETE/PUT)    
     @ResponseBody 사용    
+    
     ```java
       @Controller   
       public class IndexController{
@@ -326,7 +330,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
         }
       }
     ```
-
+    
   - @RestController와 @X-Mapping 사용 (스프링 4.3 이상...)  
   - @RestController = @Controller + @ResponseBody 개념이며 주로 JSON Object 타입으로 결과값을 리턴한다. 
   - @GetMapping(@X-Mapping) = @RequestMapping(value="/", method=RequestMethod.GET)  
@@ -341,7 +345,7 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
     
       }
     ```
-
+  
 2. Layered Architecture
   - 계층화 아키텍처를 의미하는 Layered Architecture를 스프링에서 어떻게 구현하는지 확인합니다.
 
@@ -641,6 +645,8 @@ API 서비스를 설계하고 운영할 때 Restful 하다는 의미는 다음�
     - JWT 토큰 만들기 동영상 부터 다시....
 
 
+
+# 11차 로그와 예외처리
 
   - Summary Note
     * 로깅 시스템은 여러가지로 사용 가능하지만 SLF4J를 로깅 인터페이스로 해서 Logback을 스프링5(스프링부트2)의 구현체로 많이 사용한다.      
